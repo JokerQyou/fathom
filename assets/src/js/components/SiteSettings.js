@@ -117,8 +117,7 @@ class SiteSettings extends Component {
 
                     <fieldset style={props.site.unsaved ? 'display: none;' : ''}>
                         <label>Add this code to your website    <small class="right">(site ID = {props.site.trackingId})</small></label>
-                        <textarea ref={this.setTextarea} onFocus={this.handleTextareaClickEvent} readonly="readonly">{`<!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
-<script>
+                        <textarea ref={this.setTextarea} onFocus={this.handleTextareaClickEvent} readonly="readonly">{`<script type="text/javascript">
 (function(f, a, t, h, o, m){
 	a[h]=a[h]||function(){
 		(a[h].q=a[h].q||[]).push(arguments)
@@ -130,8 +129,7 @@ class SiteSettings extends Component {
 })(document, window, '//${document.domain}/tracker.js', 'fathom');
 fathom('set', 'siteId', '${props.site.trackingId}');
 fathom('trackPageview');
-</script>
-<!-- / Fathom -->`}
+</script>`}
                     </textarea>
                     <small><a href="javascript:void(0);" onClick={this.copyToClipboard}>{state.copied ? "Copied!" : "Copy code"}</a></small>
                 </fieldset>
