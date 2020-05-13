@@ -20,7 +20,7 @@ require (
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.5.2
 	github.com/magefile/mage v1.9.0
-	github.com/mattn/go-sqlite3 v1.12.0
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/mssola/user_agent v0.5.2
 	github.com/pkg/errors v0.9.1
 	github.com/rogpeppe/go-internal v1.6.0 // indirect
