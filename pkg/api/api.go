@@ -1,8 +1,8 @@
 package api
 
 import (
+	"fathom/pkg/datastore"
 	"github.com/gorilla/sessions"
-	"github.com/usefathom/fathom/pkg/datastore"
 )
 
 type API struct {

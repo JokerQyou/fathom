@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
+	"fathom/pkg/config"
+	"fathom/pkg/datastore"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
-	"github.com/usefathom/fathom/pkg/config"
-	"github.com/usefathom/fathom/pkg/datastore"
 )
 
 type App struct {

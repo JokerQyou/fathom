@@ -3,7 +3,7 @@ package sqlstore
 import (
 	"database/sql"
 
-	"github.com/usefathom/fathom/pkg/models"
+	"fathom/pkg/models"
 )
 
 // GetUser retrieves user from datastore by its ID

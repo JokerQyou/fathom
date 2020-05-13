@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/usefathom/fathom/pkg/cli"
+	"fathom/pkg/cli"
 )
 
 var (

@@ -1,4 +1,4 @@
-module github.com/usefathom/fathom
+module fathom
 
 go 1.14
 

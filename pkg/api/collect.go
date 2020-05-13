@@ -9,10 +9,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
+	"fathom/pkg/aggregator"
+	"fathom/pkg/datastore"
+	"fathom/pkg/models"
 	"github.com/mssola/user_agent"
-	"github.com/usefathom/fathom/pkg/aggregator"
-	"github.com/usefathom/fathom/pkg/datastore"
-	"github.com/usefathom/fathom/pkg/models"
 )
 
 type Collector struct {

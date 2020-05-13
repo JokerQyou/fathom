@@ -8,8 +8,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 
+	"fathom/pkg/api"
 	"github.com/gorilla/handlers"
-	"github.com/usefathom/fathom/pkg/api"
 	"golang.org/x/crypto/acme/autocert"
 )
 

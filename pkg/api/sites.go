@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
+	"fathom/pkg/models"
 	"github.com/gorilla/mux"
-	"github.com/usefathom/fathom/pkg/models"
 )
 
 // seed rand pkg on program init

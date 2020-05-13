@@ -359,6 +359,8 @@ github.com/urfave/cli v1.22.1/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtX
 github.com/urfave/cli v1.22.4 h1:u7tSpNPPswAFymm8IehJhy4uJMlUuU/GmqSkvJ1InXA=
 github.com/urfave/cli v1.22.4/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtXRu0=
 github.com/usefathom/fathom v0.0.0-20180727065446-1c2682878eba/go.mod h1:mJiTKo1uAgX1omko0638tQprqK2rzWGHAeEhj39hm4k=
+github.com/usefathom/fathom v1.2.1 h1:/gL+jhPxhH/ex7sYyuWXdO32ix5Hgqt/c3/J4L64iyg=
+github.com/usefathom/fathom v1.2.1/go.mod h1:mJiTKo1uAgX1omko0638tQprqK2rzWGHAeEhj39hm4k=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 github.com/ziutek/mymysql v1.5.4/go.mod h1:LMSpPZ6DbqWFxNCHW77HeMg9I646SAhApZ/wKdgO/C0=

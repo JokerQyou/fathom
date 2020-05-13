@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"time"
 
+	"fathom/pkg/models"
 	log "github.com/sirupsen/logrus"
-	"github.com/usefathom/fathom/pkg/models"
 )
 
 func (db *sqlstore) GetSiteStats(siteID int64, date time.Time) (*models.SiteStats, error) {

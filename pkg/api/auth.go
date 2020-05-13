@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/usefathom/fathom/pkg/datastore"
+	"fathom/pkg/datastore"
 )
 
 type key int
