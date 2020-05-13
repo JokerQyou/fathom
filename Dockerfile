@@ -6,12 +6,12 @@ COPY assets/ ./assets/
 RUN npm install && NODE_ENV=production ./node_modules/gulp/bin/gulp.js
 
 FROM golang:latest AS binarybuilder
-WORKDIR /go/src/github.com/usefathom/fathom
-COPY . /go/src/github.com/usefathom/fathom
+WORKDIR /fathom
+COPY . /fathom
 COPY --from=assetbuilder /app/assets/build ./assets/build
 RUN go run build.go build
 
 FROM scratch
 WORKDIR /app
-COPY --from=binarybuilder /go/src/github.com/usefathom/fathom/fathom .
+COPY --from=binarybuilder /fathom/fathom .
 CMD ["./fathom", "server"]
