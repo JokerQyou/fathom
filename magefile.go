@@ -99,6 +99,7 @@ func UpdateReferrerSpamBlacklist() error {
 
 	return sh.RunV(
 		"go-bindata",
+		"-nometadata",
 		"-prefix", "pkg/aggregator/data/",
 		"-o", "pkg/aggregator/bindata.go",
 		"-pkg", "aggregator",

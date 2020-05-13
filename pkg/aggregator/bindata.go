@@ -92,7 +92,7 @@ func blacklistTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "blacklist.txt", size: 29809, mode: os.FileMode(420), modTime: time.Unix(1589361936, 0)}
+	info := bindataFileInfo{name: "blacklist.txt", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
