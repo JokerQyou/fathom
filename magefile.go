@@ -18,9 +18,9 @@ var executable = "fathom"
 
 // Build builds the binary
 func Build() error {
-	mg.Deps(Clean, InstallDeps, UpdateReferrerSpamBlacklist, buildFrontend)
+	mg.SerialDeps(Clean, InstallDeps, UpdateReferrerSpamBlacklist, buildFrontend)
 
-	fmt.Println("Building...")
+	fmt.Print("Building...")
 	gitVersion, err := sh.Output("git", "describe", "--tags", "--always")
 	if err != nil {
 		return err
@@ -38,9 +38,9 @@ func Build() error {
 	staticBuild := ""
 	if runtime.GOOS == "linux" {
 		staticBuild = `-extldflags "-static"`
-		fmt.Println("!!! Static build !!!")
+		fmt.Print("will link statically...")
 	} else {
-		fmt.Println("!!! Dynamic build !!!")
+		fmt.Print("will link dynamically...")
 	}
 	args := []string{
 		"build",
@@ -52,33 +52,31 @@ func Build() error {
 		),
 		"-o", executable,
 	}
-	fmt.Printf("packr %v\n", args)
-	return sh.RunV("packr", args...)
+	return ok(sh.RunV("packr", args...))
 }
 
 // InstallDeps installs dependencies
 func InstallDeps() error {
-	fmt.Println("Installing deps...")
+	fmt.Print("Installing dependencies...")
 	if err := sh.RunV("go", "get", "-u", "github.com/gobuffalo/packr/v2/packr2"); err != nil {
 		return err
 	}
-	if err := sh.RunV("go", "get", "-u", "github.com/go-bindata/go-bindata/..."); err != nil {
-		return err
-	}
-	return nil
+	return ok(sh.RunV("go", "get", "-u", "github.com/go-bindata/go-bindata/..."))
 }
 
 // Clean removes all build artifacts from the last build
 func Clean() error {
-	fmt.Println(`Cleaning...`)
+	fmt.Print("Cleaning...")
 	sh.RunV("go", "clean", "-i", "./...")
 	sh.RunV("packr", "clean")
-	return os.RemoveAll(executable)
+	return ok(os.RemoveAll(executable))
 }
 
 // UpdateReferrerSpamBlacklist fetches the latest referrer spam blacklist from github
 func UpdateReferrerSpamBlacklist() error {
-	mg.Deps(InstallDeps)
+	mg.SerialDeps(InstallDeps)
+	fmt.Print("Updating referrer spam blacklist...")
+	fmt.Print("downloading...")
 	resp, err := http.Get(
 		"https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt",
 	)
@@ -87,6 +85,7 @@ func UpdateReferrerSpamBlacklist() error {
 	}
 	defer resp.Body.Close()
 
+	fmt.Print("copying content...")
 	blackListFile, err := os.Create("pkg/aggregator/data/blacklist.txt")
 	if err != nil {
 		return err
@@ -97,18 +96,29 @@ func UpdateReferrerSpamBlacklist() error {
 		return err
 	}
 
-	return sh.RunV(
+	fmt.Print("embedding as go source code...")
+	return ok(sh.RunV(
 		"go-bindata",
 		"-nometadata",
 		"-prefix", "pkg/aggregator/data/",
 		"-o", "pkg/aggregator/bindata.go",
 		"-pkg", "aggregator",
 		"pkg/aggregator/data/",
-	)
+	))
 }
 
 // buildFrontend calls npm tools to build the front end project
 func buildFrontend() error {
-	fmt.Println("Building NPM project...")
-	return sh.RunWith(map[string]string{"NODE_ENV": "production"}, "./node_modules/gulp/bin/gulp.js")
+	fmt.Print("Building NPM project...")
+	return ok(sh.RunWith(
+		map[string]string{"NODE_ENV": "production"},
+		"./node_modules/gulp/bin/gulp.js",
+	))
+}
+
+func ok(err error) error {
+	if err == nil {
+		fmt.Println("done.")
+	}
+	return err
 }
