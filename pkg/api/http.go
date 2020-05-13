@@ -76,7 +76,8 @@ func serveFile(box *packr.Box, filename string) Handler {
 func NotFoundHandler(box *packr.Box) http.Handler {
 	return HandlerFunc(func(w http.ResponseWriter, r *http.Request) error {
 		w.WriteHeader(http.StatusNotFound)
-		w.Write(box.Bytes("404.html"))
+		bytes, _ := box.Find("404.html")
+		w.Write(bytes)
 		return nil
 	})
 }
