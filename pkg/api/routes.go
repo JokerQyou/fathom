@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/gobuffalo/packr"
+	"github.com/gobuffalo/packr/v2"
 	"github.com/gorilla/mux"
 )
 
@@ -34,7 +34,7 @@ func (api *API) Routes() *mux.Router {
 	r.Handle("/health", HandlerFunc(api.Health)).Methods(http.MethodGet)
 
 	// static assets & 404 handler
-	box := packr.NewBox("./../../assets/build")
+	box := packr.New("assets", "./../../assets/build")
 	r.Path("/tracker.js").Handler(serveTrackerFile(&box))
 	r.Path("/").Handler(serveFileHandler(&box, "index.html"))
 	r.Path("/index.html").Handler(serveFileHandler(&box, "index.html"))

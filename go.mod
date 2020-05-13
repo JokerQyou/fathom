@@ -7,7 +7,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gobuffalo/envy v1.9.0
 	github.com/gobuffalo/packd v1.0.0
-	github.com/gobuffalo/packr v1.30.1
+	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/golang/protobuf v1.4.1 // indirect
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
@@ -17,6 +17,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.5.2
+	github.com/magefile/mage v1.9.0
 	github.com/mattn/go-sqlite3 v1.12.0
 	github.com/mssola/user_agent v0.5.2
 	github.com/pkg/errors v0.9.1

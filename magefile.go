@@ -59,7 +59,7 @@ func Build() error {
 // InstallDeps installs dependencies
 func InstallDeps() error {
 	fmt.Println("Installing deps...")
-	if err := sh.RunV("go", "get", "-u", "github.com/gobuffalo/packr/packr@v1.30.1"); err != nil {
+	if err := sh.RunV("go", "get", "-u", "github.com/gobuffalo/packr/v2/packr2"); err != nil {
 		return err
 	}
 	if err := sh.RunV("go", "get", "-u", "github.com/go-bindata/go-bindata/..."); err != nil {

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql" // mysql driver
-	"github.com/gobuffalo/packr"
+	"github.com/gobuffalo/packr/v2"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"           // postgresql driver
 	_ "github.com/mattn/go-sqlite3" //sqlite3 driver
@@ -56,7 +56,7 @@ func New(c *Config) *sqlstore {
 
 func (db *sqlstore) Migrate() {
 	migrationSource := &migrate.PackrMigrationSource{
-		Box: packr.NewBox("./migrations"),
+		Box: packr.New("migrations", "./migrations"),
 		Dir: db.Config.Driver,
 	}
 	migrate.SetTable("migrations")
