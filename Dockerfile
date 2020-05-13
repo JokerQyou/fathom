@@ -10,12 +10,9 @@ RUN go get -u github.com/gobuffalo/packr/packr
 WORKDIR /go/src/github.com/usefathom/fathom
 COPY . /go/src/github.com/usefathom/fathom
 COPY --from=assetbuilder /app/assets/build ./assets/build
-RUN make docker
+RUN go run build.go build
 
-FROM alpine:latest
-EXPOSE 8080
-HEALTHCHECK --retries=10 CMD ["wget", "-qO-", "http://localhost:8080/health"]
-RUN apk add --update --no-cache bash ca-certificates
+FROM scratch
 WORKDIR /app
 COPY --from=binarybuilder /go/src/github.com/usefathom/fathom/fathom .
 CMD ["./fathom", "server"]
