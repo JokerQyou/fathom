@@ -60,7 +60,7 @@ func Build() error {
 		),
 		"-o", executable,
 	}
-	return ok(sh.RunV("packr", args...))
+	return ok(sh.RunV("packr2", args...))
 }
 
 // InstallDeps installs dependencies
@@ -76,7 +76,7 @@ func InstallDeps() error {
 func Clean() error {
 	fmt.Print("Cleaning...")
 	sh.RunV("go", "clean", "-i", "./...")
-	sh.RunV("packr", "clean")
+	sh.RunV("packr2", "clean")
 	os.RemoveAll("assets/build")
 	return ok(os.RemoveAll(executable))
 }
