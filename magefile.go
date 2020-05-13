@@ -59,7 +59,10 @@ func Build() error {
 // InstallDeps installs dependencies
 func InstallDeps() error {
 	fmt.Println("Installing deps...")
-	if err := sh.Run("go", "get", "-u", "github.com/gobuffalo/packr/packr@v1.30.1"); err != nil {
+	if err := sh.RunV("go", "get", "-u", "github.com/gobuffalo/packr/packr@v1.30.1"); err != nil {
+		return err
+	}
+	if err := sh.RunV("go", "get", "-u", "github.com/go-bindata/go-bindata/..."); err != nil {
 		return err
 	}
 	return nil
@@ -75,6 +78,7 @@ func Clean() error {
 
 // UpdateReferrerSpamBlacklist fetches the latest referrer spam blacklist from github
 func UpdateReferrerSpamBlacklist() error {
+	mg.Deps(InstallDeps)
 	resp, err := http.Get(
 		"https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt",
 	)
@@ -89,8 +93,17 @@ func UpdateReferrerSpamBlacklist() error {
 	}
 	defer blackListFile.Close()
 
-	_, err = io.Copy(blackListFile, resp.Body)
-	return err
+	if _, err = io.Copy(blackListFile, resp.Body); err != nil {
+		return err
+	}
+
+	return sh.RunV(
+		"go-bindata",
+		"-prefix", "pkg/aggregator/data/",
+		"-o", "pkg/aggregator/bindata.go",
+		"-pkg", "aggregator",
+		"pkg/aggregator/data/",
+	)
 }
 
 // buildFrontend calls npm tools to build the front end project
