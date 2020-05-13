@@ -16,9 +16,17 @@ import (
 
 var executable = "fathom"
 
-// Build builds the binary
+var Default = CleanBuild
+
+// CleanBuild runs a clean build
+func CleanBuild() error {
+	mg.SerialDeps(Clean, InstallDeps, UpdateReferrerSpamBlacklist, BuildFrontend, Build)
+	return nil
+}
+
+// Build builds the binary without cleaning up
 func Build() error {
-	mg.SerialDeps(Clean, InstallDeps, UpdateReferrerSpamBlacklist, buildFrontend)
+	mg.SerialDeps(InstallDeps, UpdateReferrerSpamBlacklist, BuildFrontend)
 
 	fmt.Print("Building...")
 	gitVersion, err := sh.Output("git", "describe", "--tags", "--always")
@@ -69,6 +77,7 @@ func Clean() error {
 	fmt.Print("Cleaning...")
 	sh.RunV("go", "clean", "-i", "./...")
 	sh.RunV("packr", "clean")
+	os.RemoveAll("assets/build")
 	return ok(os.RemoveAll(executable))
 }
 
@@ -107,13 +116,17 @@ func UpdateReferrerSpamBlacklist() error {
 	))
 }
 
-// buildFrontend calls npm tools to build the front end project
-func buildFrontend() error {
+// BuildFrontend calls npm tools to build the front end project
+func BuildFrontend() error {
 	fmt.Print("Building NPM project...")
-	return ok(sh.RunWith(
-		map[string]string{"NODE_ENV": "production"},
-		"./node_modules/gulp/bin/gulp.js",
-	))
+	if _, err := os.Stat("assets/build"); os.IsNotExist(err) {
+		return ok(sh.RunWith(
+			map[string]string{"NODE_ENV": "production"},
+			"./node_modules/gulp/bin/gulp.js",
+		))
+	}
+	_, err := fmt.Print("'assets/build' directory exist, skipping...")
+	return ok(err)
 }
 
 func ok(err error) error {
