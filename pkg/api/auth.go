@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strings"
 
-	gcontext "github.com/gorilla/context"
 	"github.com/usefathom/fathom/pkg/datastore"
 )
 
@@ -95,10 +94,6 @@ func (api *API) DeleteSession(w http.ResponseWriter, r *http.Request) error {
 // Authorize is middleware that aborts the request if unauthorized
 func (api *API) Authorize(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// clear context from request after it is handled
-		// see http://www.gorillatoolkit.org/pkg/sessions#overview
-		defer gcontext.Clear(r)
-
 		// first count users in datastore
 		// if 0, assume dashboard is public
 		userCount, err := api.database.CountUsers()
