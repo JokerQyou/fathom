@@ -56,7 +56,7 @@ func Build() error {
 		"-ldflags",
 		fmt.Sprintf(
 			`-w %s -X main.version=%s -X main.commit=%s -X main.date=%s`,
-			staticBuild, gitVersion, gitCommit, time.Now().Format(`2006-01-02T15:04:05Z`),
+			staticBuild, gitVersion, gitCommit, time.Now().UTC().Format(`2006-01-02T15:04:05Z`),
 		),
 		"-o", executable,
 	}
