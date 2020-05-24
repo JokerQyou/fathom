@@ -76,7 +76,7 @@ const availablePeriods = {
     return new Date(2018, 6, 1);
   },
   end: function() {
-    return new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
   },
  }
 }
