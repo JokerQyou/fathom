@@ -7,7 +7,7 @@ before_script:
     - docker pull golang:latest
 
 script:
-    - docker build -t "${DOCKER_USERNAME}/fathom"
+    - docker build -t "${DOCKER_USERNAME}/fathom" .
 
 after_success:
     - echo "$DOCKER_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin
