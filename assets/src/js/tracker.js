@@ -208,7 +208,7 @@
     document.body.appendChild(img);  
   }
 
-  function blockTrackingForMe(confirm) {
+  window.fathom["blockTrackingForMe"] = function(confirm) {
     var node;
     void 0 === confirm && (confirm = !1),
     confirm ? window.localStorage ? (window.localStorage.setItem("blockFathomTracking", !0),
