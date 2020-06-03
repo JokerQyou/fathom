@@ -37,7 +37,7 @@ gulp.task('tracker-js', function () {
         .pipe(babel({
             presets: ["@babel/preset-env"],
         }))
-        .pipe(gulpif(!debug, uglify()))
+        .pipe(gulpif(!debug, uglify({compress:{unused: false}})))
         .pipe(gulp.dest('./assets/build/js'));
 });
 
