@@ -208,6 +208,18 @@
     document.body.appendChild(img);  
   }
 
+  function blockTrackingForMe(confirm) {
+    var node;
+    void 0 === confirm && (confirm = !1),
+    confirm ? window.localStorage ? (window.localStorage.setItem("blockFathomTracking", !0),
+    document.getElementById("fathom-analytics-block-tracking-for-me").remove(),
+    alert("You have blocked Fathom for yourself on this website"),
+    window.location.reload()) : alert("Your browser doesn't support localStorage.") : ((node = document.createElement("div")).id = "fathom-analytics-block-tracking-for-me",
+    node.setAttribute("style", "background: #edf0f4;display: grid;align-items: center;text-align: center;width: 100%;min-height: 100vh;margin: 0;padding: 0; position:fixed; left:0px; top:0px;"),
+    node.innerHTML = '<div style="line-height: 1.4; font-family: -apple-system, BlinkMacSystemFont, San Francisco, Helvetica Neue, Helvetica, Ubuntu, Roboto, Noto, Segoe UI, Arial, sans-serif; background: #fff; padding: 10px; max-width: 420px; margin: auto; align-items: center; text-align: left; font-size: 14px;"><h2 style="margin: auto auto 10px auto;">Block Tracking for Me</h2><p>This message is appearing because you manually called:</p><code style="background:#edf0f4; padding: 5px 10px; margin: 5px 0; display: inline-block;">fathom.blockTrackingForMe()</code><p>For us to stop tracking you, we need a way to remember your preference. To do this, we use localStorage, which is practically the same as a cookie. We store your preference on your computer, and it will stay there indefinitely until you clear it / disable this mode.</p><p>If you did not call this function, please contact the website owner.</p><p>Do you consent to us storing your preference, indefinitely, in localStorage?</p><p><button style="padding: 10px; font-size: 14px;line-height: 1.2; text-decoration: none; transition: ease background 0.2s; display: inline-block; border: none; outline: none; cursor: pointer; background: #545454; color: #fff;" onclick="javascript:window.fathom.blockTrackingForMe(true);">Yes, store my preference in localStorage</button></p><p>If you do not consent, please refresh this page and this box will disappear.</p></div>',
+    document.body.appendChild(node))
+  }
+
   // override global fathom object
   window.fathom = function() {
     var args = [].slice.call(arguments);
@@ -216,5 +228,7 @@
   };
 
   // process existing queue
-  queue.forEach((i) => fathom.apply(this, i));
+  if (!(window.localStorage && window.localStorage.getItem("blockFathomTracking"))) {
+    queue.forEach((i) => fathom.apply(this, i));
+  }
 })()
