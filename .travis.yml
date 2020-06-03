@@ -11,4 +11,4 @@ script:
 
 after_success:
     - echo "$DOCKER_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin
-    - docker push "${DOCKER_USERNAME}/fathom"
+    - docker push "${DOCKER_USERNAME}/fathom" && docker logout
