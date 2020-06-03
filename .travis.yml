@@ -1,0 +1,14 @@
+language: go
+services:
+    - docker
+
+before_script:
+    - docker pull node:alpine
+    - docker pull golang:latest
+
+script:
+    - docker build -t "${DOCKER_USERNAME}/fathom"
+
+after_success:
+    - echo "$DOCKER_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker push "${DOCKER_USERNAME}/fathom"
